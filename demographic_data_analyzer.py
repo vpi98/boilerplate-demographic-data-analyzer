@@ -3,23 +3,23 @@ import pandas as pd
 
 def calculate_demographic_data(print_data=True):
     # Read data from file
-    df = None
+    df = pd.read_csv(r'C:\Users\VPI\Documents\FreeCodeCamp\DataAnalysis\boilerplate-demographic-data-analyzer\adult.data.csv')
 
     # How many of each race are represented in this dataset? This should be a Pandas series with race names as the index labels.
-    race_count = None
+    race_count = df.loc[:,'race'].value_counts()
 
     # What is the average age of men?
-    average_age_men = None
+    average_age_men = df.loc[df['sex']=='Male','age'].mean().round(10)
 
     # What is the percentage of people who have a Bachelor's degree?
-    percentage_bachelors = None
+    percentage_bachelors = df.loc[:,'education'].value_counts(normalize=True).loc['Bachelors'].round(10)
 
     # What percentage of people with advanced education (`Bachelors`, `Masters`, or `Doctorate`) make more than 50K?
     # What percentage of people without advanced education make more than 50K?
 
     # with and without `Bachelors`, `Masters`, or `Doctorate`
-    higher_education = None
-    lower_education = None
+    higher_education = df[df['education'].isin(['Bachelors','Masters','Doctorate'])]['salary'].value_counts(normalize=True)['>50K'].round(10)
+    lower_education = df[~df['education'].isin(['Bachelors','Masters','Doctorate'])]['salary'].value_counts(normalize=True)['>50K'].round(10)
 
     # percentage with salary >50K
     higher_education_rich = None
